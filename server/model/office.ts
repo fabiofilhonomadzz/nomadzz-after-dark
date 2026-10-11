@@ -28,6 +28,7 @@ import { describeGitHubEvent, githubEventKey, RoomEffects, type GitHubEvent } fr
 import { hash32 } from '../../shared/hash';
 import { applyPermission } from '../permissions/registry';
 import type { NameStore, StoredCharacter } from './names';
+import { personaNameFor } from './personas';
 import { normalizeCwd, roomDisplayNames, SlotAllocator } from './rooms';
 
 export const OFFLINE_GRACE_MS = 20_000;
@@ -579,7 +580,10 @@ export class Office {
       this.reactivateSub(p.id);
       return true;
     }
-    const person = this.deps.names.assign(p.id, this.takenNames());
+    const used = this.takenNames();
+    const persona = personaNameFor(p.role, used);
+    const person = persona ?? this.deps.names.assign(p.id, used);
+    if (persona) this.deps.names.remember(p.id, persona);
     const info: AgentInfo = {
       id: p.id,
       kind: 'sub',
