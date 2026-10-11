@@ -6,7 +6,7 @@ import type { SoundBoard } from '../audio/board';
 import type { UiComponent, UiContext } from './context';
 import { computeCounters } from './model';
 
-const BASE_TITLE = 'Habblaud';
+const BASE_TITLE = 'NOMADZZ After Dark';
 
 export type NotificationState = 'unsupported' | 'default' | 'granted' | 'denied';
 
