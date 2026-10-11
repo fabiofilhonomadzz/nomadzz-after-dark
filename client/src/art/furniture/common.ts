@@ -2,7 +2,7 @@
 import { mix, ramp, shade, type Ramp } from '../core/color';
 import type { PixelBuf } from '../core/pixbuf';
 import { floorSheet, rectAt, type BufFurniture } from '../core/sprite';
-import { M, contact, foliage, frontFace, glass, monitorBack, mug, papers, pick, pot, rngOf, topFace, underRect, woodGrain } from './kit';
+import { ACCENT_TRIM, M, contact, foliage, frontFace, glass, monitorBack, mug, papers, pick, pot, rngOf, topFace, underRect, woodGrain } from './kit';
 
 // ------------------------------------------------------------------ copa
 
@@ -694,20 +694,23 @@ export function sink(): BufFurniture {
 export function receptionDesk(seed: number): BufFurniture {
   const s = floorSheet(3, 1, 16);
   const b = s.buf;
-  const wood = M.oak;
-  const stone = ramp('#efede8', 0.04);
+  // NOMADZZ AFTER DARK V1: console de recepção de centro de operações — painel grafite (mais claro
+  // que o piso para não se perder nele), tampo frio claro (contraste/legibilidade) e uma única
+  // faixa de acento no roxo de destaque (o "ponto importante" desta peça).
+  const panel = ramp('#2a2e3a', 0.065);
+  const stone = ramp('#dfe1e8', 0.035);
   // Área de trabalho (atrás) com monitor de costas e planta.
-  topFace(b, 1, -10, 46, 6, M.white);
+  topFace(b, 1, -10, 46, 6, M.graphite);
   monitorBack(b, 8, -15, 13, 7);
   pot(b, 38, -13, 5, 4, M.ceramic);
   foliage(b, 40.5, -16, 3.5, 3, M.leaf, seed + 1);
   // Balcão frontal com faixa de acento.
-  frontFace(b, 0, -2, 48, 18, wood);
-  woodGrain(b, 1, -1, 46, 14, wood, seed, true);
-  b.rect(0, 5, 48, 3, '#3f7fd8');
-  b.hline(0, 47, 5, '#6aa0ec');
-  b.hline(0, 47, 7, '#2d62b3');
-  b.rect(0, 14, 48, 2, wood.dd);
+  frontFace(b, 0, -2, 48, 18, panel);
+  woodGrain(b, 1, -1, 46, 14, panel, seed, true);
+  b.rect(0, 5, 48, 3, ACCENT_TRIM);
+  b.hline(0, 47, 5, '#b78cff');
+  b.hline(0, 47, 7, '#6C4D91');
+  b.rect(0, 14, 48, 2, panel.dd);
   // Tampo (prateleira de atendimento).
   topFace(b, -1, -6, 50, 5, stone);
   b.hline(-1, 48, -2, stone.dk);

@@ -244,13 +244,14 @@ function paintConcrete(b: PixelBuf, x0: number, y0: number, seed: number): void 
   }
 }
 
-// NOMADZZ AFTER DARK V1: mármore negro da recepção (e base de toda sala de projeto), com veios no
-// roxo de destaque e num cinza-prata discreto.
+// NOMADZZ AFTER DARK V1: mármore negro premium da recepção (e base de toda sala de projeto) —
+// grafite discreto; os veios quase não têm cor (cinza-grafite muito próximo da base), só uma
+// sugestão de textura, sem brilho.
 const MARBLE: readonly RGBA[] = Array.from({ length: LEVELS }, (_, i) => rgba(mix('#14121a', '#1c1824', i / (LEVELS - 1))));
-const MARBLE_VEIN = [rgba('#9458E6'), rgba('#4a4558')] as const;
+const MARBLE_VEIN = [rgba('#332e3c'), rgba('#221f28')] as const;
 const MARBLE_SEAM = rgba('#0d0c13');
 
-/** Mármore branco em placas de 2x2 tiles com veios cinza contínuos dentro da placa. */
+/** Mármore negro em placas de 2x2 tiles, com veios raros e discretos (textura sutil, não brilho). */
 function paintMarble(b: PixelBuf, x0: number, y0: number, seed: number): void {
   for (let py = 0; py < CHUNK_PX; py++) {
     for (let px = 0; px < CHUNK_PX; px++) {
@@ -262,11 +263,11 @@ function paintMarble(b: PixelBuf, x0: number, y0: number, seed: number): void {
       }
       const slab = h3(wx >> 5, wy >> 5, 4, seed);
       const ax = (slab % 1000) / 1000;
-      // Só parte das placas tem veios (uma ou duas linhas suaves e contínuas).
-      const veined = (slab >>> 12) % 5 < 2;
+      // Poucas placas têm veio (uma linha fina), o resto é piso liso.
+      const veined = (slab >>> 12) % 6 === 0;
       const v = veined ? Math.sin(wx * 0.08 + wy * (0.14 + ax * 0.1) + noise(wx, wy, 14, seed + 12) * 2.4 + ax * 6.28) : 0;
-      if (v > 0.997) b.put(px, py, MARBLE_VEIN[1]);
-      else if (v > 0.986) b.put(px, py, MARBLE_VEIN[0]);
+      if (v > 0.994) b.put(px, py, MARBLE_VEIN[1]);
+      else if (v > 0.991) b.put(px, py, MARBLE_VEIN[0]);
       else b.put(px, py, MARBLE[Math.min(LEVELS - 1, Math.floor(noise(wx, wy, 20, seed + 11) * LEVELS))]);
     }
   }

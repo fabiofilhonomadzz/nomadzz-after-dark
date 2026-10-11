@@ -426,6 +426,9 @@ export class Overlay {
         if (ax + w > 0 && ax < vw && ay + h > 0 && ay < vh) {
           this.drawSignText(text, ax, ay, w, h, this.renderer.signIsDark(vis), room?.accounts ?? []);
           this.place(ax, ay, w, h);
+          // NOMADZZ AFTER DARK V1: subtítulo discreto da identidade, só na recepção — a placa
+          // "Habblaud" continua intacta (é o nome funcional); isto é só um selo de marca.
+          if (vis.id === 'core:recepcao') this.drawBrandSubtitle(ax + w / 2, ay + h, zoom);
         }
       }
       if (room ? readable : zoom >= 1.4) continue;
@@ -504,6 +507,31 @@ export class Overlay {
       ctx.stroke();
       dx += r * 2 + 2;
     }
+  }
+
+  /**
+   * Selo discreto "nomadzz after dark" logo abaixo da placa da recepção (só identidade visual; a
+   * placa "Habblaud" em si não muda). Some em zoom baixo em vez de espremer texto ilegível.
+   */
+  private drawBrandSubtitle(cx: number, topY: number, zoom: number): void {
+    const size = 6 * zoom;
+    if (size < 5.5 || size > 11) return;
+    const { ctx } = this;
+    const font = `600 ${size.toFixed(1)}px ${UI_FONT}`;
+    const text = 'nomadzz after dark';
+    const w = this.measure(font, text);
+    const h = size + 3;
+    const y = Math.round(topY + 2);
+    const x = Math.round(cx - w / 2);
+    if (x + w < 0 || x > this.camera.viewW || y < 0 || y > this.camera.viewH) return;
+    ctx.font = font;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(8,9,17,0.5)';
+    ctx.fillText(text, cx, y + h / 2 + 1);
+    ctx.fillStyle = '#b9a8e0';
+    ctx.fillText(text, cx, y + h / 2);
+    ctx.textAlign = 'left';
+    this.place(x, y, w, h);
   }
 
   private drawRoomPill(name: string, cx: number, cy: number, maxW: number, accounts: string[], count: number, accent: string, lit: boolean): void {

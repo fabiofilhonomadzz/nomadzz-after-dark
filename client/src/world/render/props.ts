@@ -293,30 +293,34 @@ function parasolSprite(seed: number): PropSprite {
   return { canvas: c, ax: 16, ay: 29 };
 }
 
-/** Totem da entrada com a marca (azul-marinho e laranja, como a placa da recepção). */
+// NOMADZZ AFTER DARK V1: totem da entrada na identidade (grafite/violeta #171B26/#211532, faixa no
+// roxo de destaque #9747FF — o único ponto de cor intensa da peça). "H" e "b" continuam legíveis
+// (Habblaud), só recoloridos: "H" no texto da identidade, "b" na luz ambiente #6C4D91 (mais discreto
+// que a faixa, para não competir com ela).
+/** Totem da entrada com a marca, na identidade NOMADZZ AFTER DARK. */
 function totemSprite(): PropSprite {
   const [c, ctx] = makeCanvas(14, 34);
   shadowEllipse(ctx, 7, 32, 6, 1.5, 0.25);
-  ctx.fillStyle = '#141b30';
+  ctx.fillStyle = '#171B26';
   ctx.fillRect(2, 2, 10, 30);
-  ctx.fillStyle = '#1c2541';
+  ctx.fillStyle = '#211532';
   ctx.fillRect(3, 3, 8, 28);
-  ctx.fillStyle = '#2a355a';
+  ctx.fillStyle = '#3a2d58';
   ctx.fillRect(3, 3, 1, 28);
-  // faixa laranja no topo, "H" claro e "b" laranja (as cores de "Hab" e "blaud" na placa)
-  ctx.fillStyle = '#f2a33a';
+  // faixa no roxo de destaque no topo, "H" claro e "b" na luz ambiente (cores de "Hab" e "blaud")
+  ctx.fillStyle = '#9747FF';
   ctx.fillRect(3, 5, 8, 2);
-  ctx.fillStyle = '#f5f1e6';
+  ctx.fillStyle = '#D9D4E8';
   ctx.fillRect(4, 11, 1, 6);
   ctx.fillRect(8, 11, 1, 6);
   ctx.fillRect(5, 13, 3, 1);
-  ctx.fillStyle = '#f2a33a';
+  ctx.fillStyle = '#6C4D91';
   ctx.fillRect(5, 19, 1, 6);
   ctx.fillRect(6, 21, 2, 1);
   ctx.fillRect(8, 22, 1, 2);
   ctx.fillRect(6, 24, 2, 1);
   // base
-  ctx.fillStyle = '#8d96a3';
+  ctx.fillStyle = '#4a4d58';
   ctx.fillRect(1, 31, 12, 2);
   return { canvas: c, ax: 7, ay: 32 };
 }

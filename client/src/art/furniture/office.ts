@@ -27,9 +27,10 @@ function deskMats(variant: string | undefined): DeskMats {
       return { top: M.white, edge: ramp('#d7d6d1', 0.05), legs: M.steel, ped: ramp('#dcdbd6', 0.05) };
     case 'dark':
       return { top: M.walnut, edge: ramp('#5f4535', 0.06), legs: M.graphite, ped: ramp('#5a4334', 0.06) };
-    // --- NOMADZZ AFTER DARK (aditivo): mesa executiva em mármore negro, pés em metal escuro.
+    // NOMADZZ AFTER DARK V1: mesa executiva em mármore negro, pés em metal escuro — um ponto mais
+    // claros que o piso/tapete (ambos entre #14 e #24) para a mesa não se perder no chão em vídeo.
     case 'onyx':
-      return { top: M.onyx, edge: ramp('#101014', 0.06), legs: ramp('#2a2a30', 0.07), ped: ramp('#1c1c22', 0.06) };
+      return { top: M.onyx, edge: ramp('#1c1c24', 0.06), legs: ramp('#3a3c46', 0.07), ped: ramp('#282930', 0.06) };
     default:
       return { top: M.oak, edge: M.oakDark, legs: ramp('#e9e8e4', 0.05), ped: ramp('#e6e4de', 0.05) };
   }
@@ -43,13 +44,13 @@ function deskShadow(b: PixelBuf): void {
   contact(b, -1, 13, 34, 4, 0.2);
 }
 
-/** Veios de mármore negro no tampo (alternativa a woodGrain para a variante 'onyx'). */
+/** Veios de mármore negro no tampo (alternativa a woodGrain para a variante 'onyx'): discretos, quase sem cor. */
 function marbleVeins(b: PixelBuf, x: number, y: number, w: number, h: number, seed: number): void {
   const r = rngOf(seed, 71);
   for (let v = 0; v < 2; v++) {
     let vx = x + r() * w;
     for (let yy = y; yy < y + h; yy++) {
-      b.set(Math.round(vx), yy, v ? 'rgba(151,71,255,0.28)' : 'rgba(210,210,220,0.22)');
+      b.set(Math.round(vx), yy, v ? 'rgba(90,82,104,0.16)' : 'rgba(150,150,158,0.14)');
       vx += (r() - 0.4) * 1.1;
     }
   }
@@ -228,8 +229,9 @@ const CHAIR_COLORS: Readonly<Record<string, string>> = {
   red: '#b44a4a',
   green: '#3f8a62',
   gray: '#8b929e',
-  // NOMADZZ AFTER DARK (aditivo): preto mais profundo, sem o matiz azulado de 'black'.
-  onyx: '#1f2128',
+  // NOMADZZ AFTER DARK V1: grafite sem o matiz azulado de 'black', mais claro que o piso/tapete
+  // (ambos entre #14 e #24) para a cadeira não se perder no chão em vídeo.
+  onyx: '#32343f',
 };
 
 function chairRamp(variant: string | undefined): Ramp {

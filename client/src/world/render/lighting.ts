@@ -462,9 +462,11 @@ export class Lighting {
     const n = this.ambient.night;
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
-    // NOMADZZ AFTER DARK V1: brilho de tela no roxo de destaque da identidade; bulbo do poste
-    // continua quente (contraste premium), só um pouco mais dourado.
+    // NOMADZZ AFTER DARK V1: o roxo de destaque pleno fica só nas telas das estações de agentes (o
+    // "ponto importante"); TV/máquinas/fliperama usam um brilho mais suave para não competir com
+    // elas. Bulbo do poste continua quente (contraste premium), só um pouco mais dourado.
     const cool = glowSprite('#9747FF', 48);
+    const soft = glowSprite('#9a8fc2', 48);
     const warm = glowSprite('#f0b860', 64);
     const inView = (x: number, y: number, m: number) => x > view.x0 - m && x < view.x1 + m && y > view.y0 - m && y < view.y1 + m;
     for (const vis of scene.areas.values()) {
@@ -479,8 +481,9 @@ export class Lighting {
         if (f.kind === 'desk' || f.kind === 'desk_back') {
           const mode = scene.deskScreen(f, vis);
           if (mode === 'off') continue;
-          // quem trabalha à noite fica com o rosto iluminado pela tela
-          ctx.globalAlpha = (mode === 'idle' ? 0.2 : 0.35) * k;
+          // quem trabalha à noite fica com o rosto iluminado pela tela (mais forte que ocioso: a
+          // estação de agente ativa é o ponto importante da sala)
+          ctx.globalAlpha = (mode === 'idle' ? 0.2 : 0.4) * k;
           ctx.drawImage(cool, Math.round(f.ax - 24), Math.round(f.ay - 34));
         } else if (f.kind === 'floor_lamp' && n > 0.2 && (!room || room.lightOn)) {
           // bulbo aceso (o halo no chão está no mapa de luz)
@@ -488,16 +491,16 @@ export class Lighting {
           ctx.globalAlpha = 0.5 * n;
           ctx.drawImage(warm, Math.round(g.x - 16), Math.round(g.y - 16), 32, 32);
         } else if (f.kind === 'vending_machine' || f.kind === 'arcade') {
-          ctx.globalAlpha = 0.25 * k;
-          ctx.drawImage(cool, Math.round(f.ax - 24), Math.round(f.ay - 36));
+          ctx.globalAlpha = 0.22 * k;
+          ctx.drawImage(soft, Math.round(f.ax - 24), Math.round(f.ay - 36));
         }
       }
-      // TV de parede ligada: luz azulada na frente da tela
+      // TV de parede ligada: luz suave na frente da tela
       if (n > 0.2) {
         for (const w of vis.wallItems) {
           if (w.kind !== 'tv' || !inView(w.cx, w.baseY, 60)) continue;
-          ctx.globalAlpha = 0.3 * n;
-          ctx.drawImage(cool, Math.round(w.cx - 28), Math.round(w.baseY - 30), 56, 56);
+          ctx.globalAlpha = 0.28 * n;
+          ctx.drawImage(soft, Math.round(w.cx - 28), Math.round(w.baseY - 30), 56, 56);
         }
       }
     }

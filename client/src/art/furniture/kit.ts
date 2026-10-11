@@ -22,8 +22,9 @@ export const M = {
   cardboard: ramp('#c99a5e', 0.06),
   blueFabric: ramp('#4f78b8', 0.07),
   orange: ramp('#ec8a3c', 0.07),
-  // --- NOMADZZ AFTER DARK (aditivo): mármore negro para tampos premium.
-  onyx: ramp('#1b1b20', 0.065),
+  // NOMADZZ AFTER DARK V1: mármore negro para tampos premium — um ponto mais claro que o piso/
+  // tapete (ambos entre #14 e #24) para a mesa não se perder no chão em vídeo.
+  onyx: ramp('#2c2e38', 0.065),
 } as const;
 
 /** Fio roxo discreto (acabamento premium NOMADZZ AFTER DARK V1 — roxo de destaque #9747FF). */
