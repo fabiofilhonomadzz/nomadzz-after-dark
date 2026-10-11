@@ -1,25 +1,25 @@
-// Temas de sala (puros): paletas claras e bem distintas. Sementes consecutivas (slots vizinhos)
-// recebem temas diferentes; a ordem da lista alterna famílias de cor de propósito.
+// Temas de sala (puros): identidade NOMADZZ AFTER DARK V1 — superfícies #171B26/#211532, roxo de
+// destaque #9747FF, luz ambiente #6C4D91. Sementes consecutivas (slots vizinhos) recebem temas
+// diferentes; a ordem da lista alterna tom de parede e matiz do acento para toda sala ficar escura
+// (grafite/carvão/roxo profundo), com variedade suficiente para reconhecer salas vizinhas.
+// Usam pattern 'plain'/'stripes'/'tiles' (não 'marble'/'wood_panel'): essas duas texturas misturam
+// a cor base com um tom claro fixo e não escurecem o suficiente para o visual noturno (ver mesma
+// observação em core.ts/CORE_WALLS).
 import type { RoomTheme } from './api';
 
 const THEMES: readonly RoomTheme[] = [
-  { carpet: '#c9d1dc', carpet2: '#bdc6d3', wall: { base: '#eef1f4', trim: '#9fb0c4', pattern: 'plain' }, accent: '#3f7fd8', deskVariant: 'white', chairVariant: 'blue' },
-  { carpet: '#dbcfba', carpet2: '#d0c2ab', wall: { base: '#f6f0e5', trim: '#b99f7a', pattern: 'stripes' }, accent: '#ec8a3c', deskVariant: 'wood', chairVariant: 'black' },
-  { carpet: '#c4cfbb', carpet2: '#b8c5af', wall: { base: '#f1f3ea', trim: '#93a487', pattern: 'wood_panel' }, accent: '#4cae6a', deskVariant: 'wood', chairVariant: 'green' },
-  { carpet: '#cdc8de', carpet2: '#c2bbd5', wall: { base: '#f3f1f8', trim: '#a59cc4', pattern: 'plain' }, accent: '#8d66cf', deskVariant: 'white', chairVariant: 'gray' },
-  { carpet: '#e4cdbe', carpet2: '#dbc1b0', wall: { base: '#f8f1eb', trim: '#c99a83', pattern: 'plain' }, accent: '#e2604f', deskVariant: 'wood', chairVariant: 'red' },
-  { carpet: '#bfd9d2', carpet2: '#b2cfc7', wall: { base: '#eef6f4', trim: '#7fb3a6', pattern: 'stripes' }, accent: '#36b0b0', deskVariant: 'white', chairVariant: 'green' },
-  { carpet: '#aab1bd', carpet2: '#9fa7b4', wall: { base: '#e8eaee', trim: '#6d7583', pattern: 'brick' }, accent: '#f2c14e', deskVariant: 'dark', chairVariant: 'black' },
-  { carpet: '#e0cad2', carpet2: '#d6bdc6', wall: { base: '#f9f2f4', trim: '#c08ea0', pattern: 'stripes' }, accent: '#e47aa8', deskVariant: 'white', chairVariant: 'black' },
-  { carpet: '#c0d2e7', carpet2: '#b3c7e0', wall: { base: '#eef4fa', trim: '#8aa6c8', pattern: 'wood_panel' }, accent: '#5b8fe0', deskVariant: 'wood', chairVariant: 'blue' },
-  { carpet: '#d1c5b8', carpet2: '#c5b8aa', wall: { base: '#f4efe8', trim: '#8a6a52', pattern: 'wood_panel' }, accent: '#c9713f', deskVariant: 'dark', chairVariant: 'gray' },
-  // --- NOMADZZ AFTER DARK (aditivo): paleta de mansão de luxo — ônix, violeta, grafite e dourado.
-  // Usam pattern 'plain'/'stripes'/'tiles' (não 'marble'/'wood_panel') porque essas duas texturas
-  // misturam a cor base com um tom claro fixo e não escurecem o suficiente para o visual noturno.
-  { carpet: '#232026', carpet2: '#1d1a20', wall: { base: '#16151a', trim: '#caa96b', pattern: 'stripes' }, accent: '#d4af6a', deskVariant: 'onyx', chairVariant: 'onyx' },
-  { carpet: '#2b2140', carpet2: '#241c35', wall: { base: '#1c1730', trim: '#9b7fe0', pattern: 'plain' }, accent: '#9b6bf2', deskVariant: 'onyx', chairVariant: 'onyx' },
-  { carpet: '#32343b', carpet2: '#2b2d33', wall: { base: '#24252b', trim: '#c7c9cf', pattern: 'tiles' }, accent: '#9fb4d9', deskVariant: 'onyx', chairVariant: 'onyx' },
-  { carpet: '#241a38', carpet2: '#1e1630', wall: { base: '#17101f', trim: '#d8b568', pattern: 'stripes' }, accent: '#b78a3d', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#1b1a22', carpet2: '#15141c', wall: { base: '#171B26', trim: '#6C4D91', pattern: 'stripes' }, accent: '#9747FF', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#201a30', carpet2: '#1a1528', wall: { base: '#211532', trim: '#9747FF', pattern: 'plain' }, accent: '#B467FF', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#1e1b28', carpet2: '#18151f', wall: { base: '#1c1824', trim: '#8a6bd8', pattern: 'tiles' }, accent: '#7C5CFF', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#231a38', carpet2: '#1c1530', wall: { base: '#241530', trim: '#6C4D91', pattern: 'stripes' }, accent: '#C77DFF', deskVariant: 'onyx', chairVariant: 'onyx' },
+  // AI CORE: variante quase preta (perto do fundo #080911 da identidade) — ar de área de
+  // servidores, onde as telas e o fio roxo são o único contraste.
+  { carpet: '#121119', carpet2: '#0d0c13', wall: { base: '#0f0e16', trim: '#9747FF', pattern: 'plain' }, accent: '#9747FF', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#1a1826', carpet2: '#14121e', wall: { base: '#19172a', trim: '#B467FF', pattern: 'tiles' }, accent: '#8A5CF6', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#1c1730', carpet2: '#16121f', wall: { base: '#1d1430', trim: '#caa6ff', pattern: 'stripes' }, accent: '#A86BFF', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#17141e', carpet2: '#110f18', wall: { base: '#15131f', trim: '#6C4D91', pattern: 'plain' }, accent: '#6C4D91', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#1f1a2c', carpet2: '#19151f', wall: { base: '#201a2e', trim: '#9747FF', pattern: 'tiles' }, accent: '#9458E6', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#22192e', carpet2: '#1c1526', wall: { base: '#241c34', trim: '#7C5CFF', pattern: 'stripes' }, accent: '#B98BFF', deskVariant: 'onyx', chairVariant: 'onyx' },
 ];
 
 export const THEME_COUNT = THEMES.length;

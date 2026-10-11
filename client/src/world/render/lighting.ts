@@ -462,8 +462,9 @@ export class Lighting {
     const n = this.ambient.night;
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
-    // NOMADZZ AFTER DARK: luz de tela com matiz violeta indireto; bulbo do poste num dourado mais rico.
-    const cool = glowSprite('#9a9bf0', 48);
+    // NOMADZZ AFTER DARK V1: brilho de tela no roxo de destaque da identidade; bulbo do poste
+    // continua quente (contraste premium), só um pouco mais dourado.
+    const cool = glowSprite('#9747FF', 48);
     const warm = glowSprite('#f0b860', 64);
     const inView = (x: number, y: number, m: number) => x > view.x0 - m && x < view.x1 + m && y > view.y0 - m && y < view.y1 + m;
     for (const vis of scene.areas.values()) {

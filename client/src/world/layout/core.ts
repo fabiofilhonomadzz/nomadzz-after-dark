@@ -9,14 +9,20 @@ export const RESTROOM_ID = 'core:banheiros';
 export const CAFE_ID = 'core:copa';
 export const LOUNGE_ID = 'core:lounge';
 
-/** Paredes do núcleo: tons claros e neutros (frios), com acabamentos diferentes por ambiente. */
+// NOMADZZ AFTER DARK V1: paredes do núcleo na identidade oficial (superfícies #171B26/#211532,
+// roxo de destaque #9747FF, luz ambiente #6C4D91). 'wood_panel' e 'marble' saíram porque misturam
+// a base com um tom claro fixo e não escurecem (ver comentário equivalente em theme.ts);
+// 'tiles'/'stripes' no lugar delas são derivados da própria base e escurecem corretamente.
 export const CORE_WALLS = {
-  reception: { base: '#e9e5dc', trim: '#a88e6c', pattern: 'wood_panel' } satisfies WallStyle,
-  restroom: { base: '#dce8ee', trim: '#8fb0c0', pattern: 'tiles' } satisfies WallStyle,
-  cafe: { base: '#eef0ee', trim: '#9aa6ad', pattern: 'plain' } satisfies WallStyle,
-  cafeSplash: { base: '#d9dcdf', trim: '#8d969e', pattern: 'marble' } satisfies WallStyle,
-  lounge: { base: '#e6e2ea', trim: '#8f8aa3', pattern: 'plain' } satisfies WallStyle,
-  glass: { base: '#cfe6f0', trim: '#9fb9c6', pattern: 'glass' } satisfies WallStyle,
+  // recepção: entrada premium, trim no roxo de destaque pleno
+  reception: { base: '#171B26', trim: '#9747FF', pattern: 'stripes' } satisfies WallStyle,
+  // banheiro: continua funcional/claro na sensação, mas na mesma grafite-escura da identidade
+  restroom: { base: '#1b2430', trim: '#4f9aa8', pattern: 'tiles' } satisfies WallStyle,
+  // copa → lounge tecnológico discreto: violeta profundo, trim na luz ambiente da identidade
+  cafe: { base: '#211532', trim: '#6C4D91', pattern: 'plain' } satisfies WallStyle,
+  cafeSplash: { base: '#14121c', trim: '#9747FF', pattern: 'stripes' } satisfies WallStyle,
+  lounge: { base: '#1c1a28', trim: '#3cd8d2', pattern: 'plain' } satisfies WallStyle,
+  glass: { base: '#1c2740', trim: '#4a5c86', pattern: 'glass' } satisfies WallStyle,
 };
 
 /** Centros (em tiles locais) dos dois elevadores na face norte da recepção. */

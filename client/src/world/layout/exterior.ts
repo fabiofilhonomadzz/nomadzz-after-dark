@@ -5,7 +5,9 @@ import { BUILDING_H, COL_W, CORE_COLS, CORRIDOR_Y, EXT_EAST, EXT_NORTH, EXT_SOUT
 import { cellRect, slotAt, slotColumn, slotSide } from './geometry';
 import type { ExteriorProp, FloorPatch, TileRect, WallItemPlacement, WallSegment } from './types';
 
-export const EXTERIOR_WALL: WallStyle = { base: '#cfc8bd', trim: '#8a8174', pattern: 'brick', exterior: true };
+// NOMADZZ AFTER DARK V1: fachada noturna na identidade oficial (base próxima do fundo #080911,
+// trim na luz ambiente #6C4D91).
+export const EXTERIOR_WALL: WallStyle = { base: '#14131c', trim: '#6C4D91', pattern: 'brick', exterior: true };
 
 export interface ExteriorLayout {
   /** Limites da área desenhada (tiles). */

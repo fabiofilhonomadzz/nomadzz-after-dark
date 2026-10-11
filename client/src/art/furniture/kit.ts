@@ -26,8 +26,8 @@ export const M = {
   onyx: ramp('#1b1b20', 0.065),
 } as const;
 
-/** Fio dourado discreto (acabamento premium NOMADZZ AFTER DARK). */
-export const GOLD_TRIM = '#caa96b';
+/** Fio roxo discreto (acabamento premium NOMADZZ AFTER DARK V1 — roxo de destaque #9747FF). */
+export const ACCENT_TRIM = '#9747FF';
 
 /** Cores de acento saturadas (pastas, livros, objetos). */
 export const ACCENTS = ['#3f7fd8', '#ec8a3c', '#4cae6a', '#e05a5a', '#f2c14e', '#8d66cf', '#36b0b0', '#e47aa8'] as const;
@@ -199,7 +199,7 @@ export function monitorFront(b: PixelBuf, x: number, y: number, w = 16, h = 11, 
   const body = '#2c313d';
   const edge = glow === 'violet' ? '#4a3d6e' : '#2a3d5f';
   const streak = glow === 'violet' ? '#54447a' : '#2f4569';
-  const led = glow === 'violet' ? GOLD_TRIM : '#5fd07a';
+  const led = glow === 'violet' ? ACCENT_TRIM : '#5fd07a';
   // Sombra do monitor no tampo (luz de cima/esquerda).
   b.hline(x + 3, x + w - 2, y + h + 3, SURFACE_SHADOW);
   b.rect(x, y, w, h, body);

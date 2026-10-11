@@ -5,7 +5,7 @@ import { mix, ramp, shade, type Ramp } from '../core/color';
 import { floorSheet, rectAt, type BufFurniture, type BufSprite } from '../core/sprite';
 import type { PixelBuf } from '../core/pixbuf';
 import {
-  ACCENTS, GOLD_TRIM, M, bigLeaf, book, contact, foliage, frontFace, keyboard, leafBlade, monitorBack, monitorFront, mouse, mug,
+  ACCENTS, ACCENT_TRIM, M, bigLeaf, book, contact, foliage, frontFace, keyboard, leafBlade, monitorBack, monitorFront, mouse, mug,
   papers, pencilCup, photoFrame, pick, pot, rngOf, smallSucculent, staticScreen, topFace, underRect, woodGrain,
   type DeskItemTone,
 } from './kit';
@@ -49,7 +49,7 @@ function marbleVeins(b: PixelBuf, x: number, y: number, w: number, h: number, se
   for (let v = 0; v < 2; v++) {
     let vx = x + r() * w;
     for (let yy = y; yy < y + h; yy++) {
-      b.set(Math.round(vx), yy, v ? 'rgba(201,169,106,0.3)' : 'rgba(210,210,220,0.22)');
+      b.set(Math.round(vx), yy, v ? 'rgba(151,71,255,0.28)' : 'rgba(210,210,220,0.22)');
       vx += (r() - 0.4) * 1.1;
     }
   }
@@ -86,8 +86,8 @@ function deskBody(s: BufSprite, m: DeskMats, seed: number, back: boolean, varian
   b.hline(0, 31, 6, m.edge.base);
   b.hline(0, 31, 7, m.edge.dk);
   b.set(0, 6, m.edge.lt);
-  // Fio dourado discreto na aresta frontal do tampo (acabamento premium).
-  if (variant === 'onyx') b.hline(0, 31, 6, GOLD_TRIM);
+  // Fio roxo discreto na aresta frontal do tampo (acabamento premium, roxo de destaque #9747FF).
+  if (variant === 'onyx') b.hline(0, 31, 6, ACCENT_TRIM);
 }
 
 /**

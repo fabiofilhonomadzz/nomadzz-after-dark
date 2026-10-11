@@ -28,14 +28,15 @@ export const FIXED_DAY_HOUR = 13.5;
 export const FIXED_NIGHT_HOUR = 22.5;
 
 export const WHITE: Rgb = [255, 255, 255];
-// NOMADZZ AFTER DARK: lâmpada mais dourada e penumbra num cinza-ameixa (em vez de azulado) —
-// só os tons de LAMP/VIGIL e das chaves de madrugada/noite fechada em KEYS, abaixo.
+// NOMADZZ AFTER DARK V1: identidade oficial — luz ambiente #6C4D91 (108,77,145) ancora VIGIL e as
+// chaves de noite fechada em KEYS; a lâmpada continua dourada quente (contraste premium contra o
+// roxo ambiente) e só os tons abaixo mudam.
 /** Luz de lâmpada (interiores à noite). */
 const LAMP: Rgb = [246, 210, 164];
 /** Sol baixo entrando pelas janelas (amanhecer/entardecer). */
 const SUN: Rgb = [255, 222, 184];
-/** Área comum vazia à noite: penumbra em cinza-ameixa (sombra sofisticada, não azulada). */
-const VIGIL: Rgb = [130, 116, 152];
+/** Área comum vazia à noite: penumbra na "luz ambiente" #6C4D91 da identidade NOMADZZ AFTER DARK. */
+const VIGIL: Rgb = [108, 77, 145];
 
 /**
  * Chaves do céu ao longo do dia: [hora, noite, quente, cor do exterior]. Interpolação linear, com a
@@ -43,13 +44,14 @@ const VIGIL: Rgb = [130, 116, 152];
  * começo da noite; o amanhecer passa pelo violeta e pelo rosado, o entardecer pelo dourado e pelo
  * laranja até o roxo do crepúsculo.
  */
-// NOMADZZ AFTER DARK: madrugada/noite fechada (night=1, warm=0) em índigo-violeta discreto — azul
-// ainda domina o vermelho (mantém o céu legível como noite, não um roxo saturado), mas o verde fica
-// um pouco abaixo do vermelho, o que dá o leve matiz violeta em vez do azul-marinho original.
+// NOMADZZ AFTER DARK V1: madrugada/noite fechada (night=1, warm=0) ancorada na luz ambiente #6C4D91
+// da identidade — 22h30 (FIXED_NIGHT_HOUR, o modo 'night' fixo) cai bem perto desse tom exato.
+// A noite fechada do exterior fica mais escura que a "luz ambiente" (VIGIL, acima): a rua/jardim
+// sem luz direta deve ler como mais apagada que uma área comum com presença.
 const KEYS: readonly (readonly [number, number, number, Rgb])[] = [
-  [0, 1, 0, [78, 58, 132]],
-  [4.5, 1, 0, [80, 60, 134]],
-  [5.25, 0.86, 0.25, [104, 100, 156]],
+  [0, 1, 0, [80, 58, 112]],
+  [4.5, 1, 0, [84, 60, 115]],
+  [5.25, 0.86, 0.25, [104, 92, 134]],
   [5.9, 0.56, 0.8, [190, 146, 168]],
   [6.5, 0.2, 1, [255, 208, 174]],
   [7.25, 0, 0.35, [255, 238, 220]],
@@ -58,9 +60,9 @@ const KEYS: readonly (readonly [number, number, number, Rgb])[] = [
   [17.25, 0.04, 0.45, [255, 236, 206]],
   [18, 0.24, 1, [255, 202, 162]],
   [18.6, 0.55, 0.75, [194, 148, 164]],
-  [19.25, 0.85, 0.3, [110, 108, 162]],
-  [20, 1, 0, [92, 70, 150]],
-  [24, 1, 0, [78, 58, 132]],
+  [19.25, 0.85, 0.3, [96, 72, 124]],
+  [20, 1, 0, [84, 60, 115]],
+  [24, 1, 0, [80, 58, 112]],
 ];
 
 const clamp = (v: number, a: number, b: number): number => (v < a ? a : v > b ? b : v);

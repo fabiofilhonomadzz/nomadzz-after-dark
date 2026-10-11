@@ -104,8 +104,9 @@ function paintTile(b: PixelBuf, kind: FloorKind, tx: number, ty: number, o: Floo
       break;
     }
     case 'tile_check': {
-      const a = '#f2ede4';
-      const c = '#d2d8de';
+      // NOMADZZ AFTER DARK V1: xadrez da copa nas duas superfícies da identidade (#171B26/#211532).
+      const a = '#211532';
+      const c = '#171B26';
       for (let qy = 0; qy < 2; qy++) {
         for (let qx = 0; qx < 2; qx++) {
           const col = (qx + qy + tx + ty) % 2 ? c : a;
@@ -119,15 +120,16 @@ function paintTile(b: PixelBuf, kind: FloorKind, tx: number, ty: number, o: Floo
       break;
     }
     case 'tile_white': {
-      const col = '#eef2f5';
-      const grout = '#d3dae1';
+      // NOMADZZ AFTER DARK V1: banheiro limpo e funcional, mas na grafite-escura da identidade.
+      const col = '#1b2430';
+      const grout = '#121a24';
       b.rect(0, 0, TILE, TILE, col);
       for (let q = 0; q < 2; q++) {
         b.hline(0, TILE - 1, q * 8 + 7, grout);
         b.vline(q * 8 + 7, 0, TILE - 1, grout);
       }
-      for (let qy = 0; qy < 2; qy++) for (let qx = 0; qx < 2; qx++) b.hline(qx * 8, qx * 8 + 2, qy * 8, '#fbfcfd');
-      if (r(1) < 0.4) b.set(Math.floor(r(2) * 14), Math.floor(r(3) * 14), '#e4eaef');
+      for (let qy = 0; qy < 2; qy++) for (let qx = 0; qx < 2; qx++) b.hline(qx * 8, qx * 8 + 2, qy * 8, shade(col, 0.05));
+      if (r(1) < 0.4) b.set(Math.floor(r(2) * 14), Math.floor(r(3) * 14), shade(col, -0.04));
       break;
     }
     case 'grass': {
@@ -212,10 +214,11 @@ function paintWood(b: PixelBuf, x0: number, y0: number, seed: number): void {
 }
 
 const LEVELS = 16;
-const CONCRETE: readonly RGBA[] = Array.from({ length: LEVELS }, (_, i) => rgba(mix('#d6d9dc', '#e4e6e8', i / (LEVELS - 1))));
-const CONCRETE_EDGE: readonly RGBA[] = CONCRETE.map((c) => rgba(shade(`rgb(${c[0]},${c[1]},${c[2]})`, 0.02)));
-const CONCRETE_SEAM = rgba('#c8cdd2');
-const CONCRETE_SPECK = [rgba('#cdd1d5'), rgba('#eceeef')] as const;
+// NOMADZZ AFTER DARK V1: cimento do corredor na grafite da identidade (entre as duas superfícies).
+const CONCRETE: readonly RGBA[] = Array.from({ length: LEVELS }, (_, i) => rgba(mix('#171B26', '#211532', i / (LEVELS - 1))));
+const CONCRETE_EDGE: readonly RGBA[] = CONCRETE.map((c) => rgba(shade(`rgb(${c[0]},${c[1]},${c[2]})`, 0.04)));
+const CONCRETE_SEAM = rgba('#0f0e16');
+const CONCRETE_SPECK = [rgba('#120f1a'), rgba('#2a2240')] as const;
 
 /** Cimento polido claro em placas de 2x2 tiles, com manchas suaves contínuas. */
 function paintConcrete(b: PixelBuf, x0: number, y0: number, seed: number): void {
@@ -241,9 +244,11 @@ function paintConcrete(b: PixelBuf, x0: number, y0: number, seed: number): void 
   }
 }
 
-const MARBLE: readonly RGBA[] = Array.from({ length: LEVELS }, (_, i) => rgba(mix('#ebe8e3', '#f5f3f0', i / (LEVELS - 1))));
-const MARBLE_VEIN = [rgba('#e2e3e6'), rgba('#cfd2d7')] as const;
-const MARBLE_SEAM = rgba('#d6d3ce');
+// NOMADZZ AFTER DARK V1: mármore negro da recepção (e base de toda sala de projeto), com veios no
+// roxo de destaque e num cinza-prata discreto.
+const MARBLE: readonly RGBA[] = Array.from({ length: LEVELS }, (_, i) => rgba(mix('#14121a', '#1c1824', i / (LEVELS - 1))));
+const MARBLE_VEIN = [rgba('#9458E6'), rgba('#4a4558')] as const;
+const MARBLE_SEAM = rgba('#0d0c13');
 
 /** Mármore branco em placas de 2x2 tiles com veios cinza contínuos dentro da placa. */
 function paintMarble(b: PixelBuf, x0: number, y0: number, seed: number): void {

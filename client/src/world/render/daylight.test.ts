@@ -44,7 +44,7 @@ describe('fases do dia', () => {
 });
 
 describe('nível de luz e cores', () => {
-  it('meio-dia é neutro (nada a desenhar); a noite é escura e azulada', () => {
+  it('meio-dia é neutro (nada a desenhar); a noite é escura e roxa (NOMADZZ AFTER DARK)', () => {
     const noon = ambientAt(12);
     expect(noon.night).toBe(0);
     expect(noon.outside).toEqual([255, 255, 255]);
@@ -54,8 +54,9 @@ describe('nível de luz e cores', () => {
     expect(late.night).toBe(1);
     expect(isNeutral(late)).toBe(false);
     expect(lum(late.outside)).toBeLessThan(110);
-    // azulado: o azul domina o vermelho no exterior noturno
-    expect(late.outside[2]).toBeGreaterThan(late.outside[0] + 40);
+    // roxo: o azul domina o vermelho, e o vermelho domina o verde (lê como violeta, não azul-marinho)
+    expect(late.outside[2]).toBeGreaterThan(late.outside[0] + 20);
+    expect(late.outside[0]).toBeGreaterThan(late.outside[1] + 15);
     // interiores acesos continuam claros (e quentes: o vermelho domina o azul)
     expect(lum(late.inside)).toBeGreaterThan(200);
     expect(late.inside[0]).toBeGreaterThan(late.inside[2]);

@@ -4,18 +4,21 @@
    Identidade: detalhes "em pixel" (pontos de status quadrados, barras segmentadas de uso, ícones em pixels). */
 
 .ui-root {
-  --ui-bg: rgba(18, 21, 29, 0.85);
-  --ui-bg-solid: rgba(20, 24, 33, 0.97);
+  /* NOMADZZ AFTER DARK V1: identidade oficial — fundo #080911, superfícies #171B26/#211532, roxo
+     de destaque #9747FF, texto #D9D4E8. --ui-faint e --ui-muted continuam neutros de propósito
+     (contraste AA já verificado abaixo; só a tonalidade geral do painel e o acento mudam). */
+  --ui-bg: rgba(8, 9, 17, 0.85);
+  --ui-bg-solid: rgba(23, 27, 38, 0.97);
   --ui-bg-soft: rgba(255, 255, 255, 0.035);
   --ui-bg-hover: rgba(255, 255, 255, 0.06);
-  --ui-line: rgba(160, 176, 210, 0.13);
-  --ui-line-strong: rgba(160, 176, 210, 0.24);
-  --ui-text: #e8ecf5;
+  --ui-line: rgba(160, 140, 205, 0.14);
+  --ui-line-strong: rgba(151, 71, 255, 0.3);
+  --ui-text: #D9D4E8;
   --ui-muted: #9aa4b8;
   /* 5,4:1 sobre o painel (#161a23) e 4,8:1 sobre linhas em destaque: AA para texto pequeno. */
   --ui-faint: #8790a6;
-  --ui-accent: #7cc8ff;
-  --ui-accent-soft: rgba(124, 200, 255, 0.13);
+  --ui-accent: #9747FF;
+  --ui-accent-soft: rgba(151, 71, 255, 0.16);
 
   --st-working: #4fd18b;
   --st-waiting: #ffb547;
