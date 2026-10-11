@@ -24,9 +24,11 @@ const MAP_SCALE = 2;
 const FADE_MS = 1_200;
 /** Ocupação das áreas comuns (luz por presença) reavaliada a cada isto (ms). */
 const OCCUPANCY_MS = 250;
-const LAMP_WARM: Rgb = [255, 236, 196];
-const STREET_WARM: Rgb = [255, 214, 150];
-const SCREEN_COOL: Rgb = [196, 222, 255];
+// NOMADZZ AFTER DARK: halos de luminária/poste num dourado mais rico (reflexo dourado) e o brilho
+// de tela com um leve matiz violeta (iluminação indireta), em vez do azul puro original.
+const LAMP_WARM: Rgb = [250, 214, 150];
+const STREET_WARM: Rgb = [244, 196, 128];
+const SCREEN_COOL: Rgb = [202, 200, 255];
 const ARCADE_GLOW: Rgb = [236, 190, 255];
 const FIREFLIES = 26;
 
@@ -86,7 +88,10 @@ function haloSprite(c: Rgb, size: number): HTMLCanvasElement {
 
 let vignette: HTMLCanvasElement | null = null;
 
-/** Vinheta (multiplicação) das salas acesas à noite: centro neutro, cantos um pouco mais escuros e quentes. */
+/**
+ * Vinheta (multiplicação) das salas acesas à noite: centro neutro, cantos um pouco mais escuros.
+ * NOMADZZ AFTER DARK: sombra de canto em cinza-ameixa (sofisticada) em vez do marrom quente original.
+ */
 function vignetteSprite(): HTMLCanvasElement {
   if (vignette) return vignette;
   const size = 64;
@@ -96,8 +101,8 @@ function vignetteSprite(): HTMLCanvasElement {
   const ctx = vignette.getContext('2d')!;
   const g = ctx.createRadialGradient(size / 2, size * 0.45, 0, size / 2, size * 0.45, size * 0.62);
   g.addColorStop(0, 'rgb(255,255,255)');
-  g.addColorStop(0.5, 'rgb(252,248,242)');
-  g.addColorStop(1, 'rgb(212,196,176)');
+  g.addColorStop(0.5, 'rgb(248,246,248)');
+  g.addColorStop(1, 'rgb(188,178,200)');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, size, size);
   return vignette;
@@ -457,8 +462,9 @@ export class Lighting {
     const n = this.ambient.night;
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
-    const cool = glowSprite('#7fb8ff', 48);
-    const warm = glowSprite('#ffcf7a', 64);
+    // NOMADZZ AFTER DARK: luz de tela com matiz violeta indireto; bulbo do poste num dourado mais rico.
+    const cool = glowSprite('#9a9bf0', 48);
+    const warm = glowSprite('#f0b860', 64);
     const inView = (x: number, y: number, m: number) => x > view.x0 - m && x < view.x1 + m && y > view.y0 - m && y < view.y1 + m;
     for (const vis of scene.areas.values()) {
       const p = vis.px;

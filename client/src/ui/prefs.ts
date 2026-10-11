@@ -28,7 +28,9 @@ export const DEFAULT_PREFS: UiPrefs = {
   showNames: DEFAULT_WORLD_OPTIONS.showNames,
   bubbles: DEFAULT_WORLD_OPTIONS.bubbles,
   liveliness: DEFAULT_WORLD_OPTIONS.liveliness,
-  daylight: 'auto',
+  // NOMADZZ AFTER DARK (aditivo): atmosfera noturna por padrão, só na camada visual — a pessoa
+  // pode trocar para 'auto' ou 'day' a qualquer momento no mesmo seletor de Configurações.
+  daylight: 'night',
   sound: false,
   sounds: DEFAULT_SOUND_SETTINGS,
   browserNotifications: false,

@@ -13,6 +13,13 @@ const THEMES: readonly RoomTheme[] = [
   { carpet: '#e0cad2', carpet2: '#d6bdc6', wall: { base: '#f9f2f4', trim: '#c08ea0', pattern: 'stripes' }, accent: '#e47aa8', deskVariant: 'white', chairVariant: 'black' },
   { carpet: '#c0d2e7', carpet2: '#b3c7e0', wall: { base: '#eef4fa', trim: '#8aa6c8', pattern: 'wood_panel' }, accent: '#5b8fe0', deskVariant: 'wood', chairVariant: 'blue' },
   { carpet: '#d1c5b8', carpet2: '#c5b8aa', wall: { base: '#f4efe8', trim: '#8a6a52', pattern: 'wood_panel' }, accent: '#c9713f', deskVariant: 'dark', chairVariant: 'gray' },
+  // --- NOMADZZ AFTER DARK (aditivo): paleta de mansão de luxo — ônix, violeta, grafite e dourado.
+  // Usam pattern 'plain'/'stripes'/'tiles' (não 'marble'/'wood_panel') porque essas duas texturas
+  // misturam a cor base com um tom claro fixo e não escurecem o suficiente para o visual noturno.
+  { carpet: '#232026', carpet2: '#1d1a20', wall: { base: '#16151a', trim: '#caa96b', pattern: 'stripes' }, accent: '#d4af6a', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#2b2140', carpet2: '#241c35', wall: { base: '#1c1730', trim: '#9b7fe0', pattern: 'plain' }, accent: '#9b6bf2', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#32343b', carpet2: '#2b2d33', wall: { base: '#24252b', trim: '#c7c9cf', pattern: 'tiles' }, accent: '#9fb4d9', deskVariant: 'onyx', chairVariant: 'onyx' },
+  { carpet: '#241a38', carpet2: '#1e1630', wall: { base: '#17101f', trim: '#d8b568', pattern: 'stripes' }, accent: '#b78a3d', deskVariant: 'onyx', chairVariant: 'onyx' },
 ];
 
 export const THEME_COUNT = THEMES.length;

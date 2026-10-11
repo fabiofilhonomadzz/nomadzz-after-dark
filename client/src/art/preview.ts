@@ -4,6 +4,7 @@
 import '@fontsource/pixelify-sans/400.css';
 import * as art from './index';
 import { pixelText, pixelTextWidth } from './pixelfont';
+import { THEME_COUNT } from './theme';
 import {
   FURNITURE,
   TILE,
@@ -852,8 +853,8 @@ function clockAndIcons(): void {
   }, '#5b6b85');
   const th = document.createElement('div');
   s.appendChild(th);
-  canvas(th, 10 * 70, 76, (ctx, t) => {
-    for (let i = 0; i < 10; i++) {
+  canvas(th, THEME_COUNT * 70, 76, (ctx, t) => {
+    for (let i = 0; i < THEME_COUNT; i++) {
       const theme = art.roomTheme(i);
       const x = i * 70;
       art.drawFloor(ctx, 'carpet', x, 32, 64, 32, { seed: i, tint: theme.carpet, tint2: theme.carpet2 });

@@ -5,7 +5,7 @@ import { mix, ramp, shade, type Ramp } from '../core/color';
 import { floorSheet, rectAt, type BufFurniture, type BufSprite } from '../core/sprite';
 import type { PixelBuf } from '../core/pixbuf';
 import {
-  ACCENTS, M, bigLeaf, book, contact, foliage, frontFace, keyboard, leafBlade, monitorBack, monitorFront, mouse, mug,
+  ACCENTS, GOLD_TRIM, M, bigLeaf, book, contact, foliage, frontFace, keyboard, leafBlade, monitorBack, monitorFront, mouse, mug,
   papers, pencilCup, photoFrame, pick, pot, rngOf, smallSucculent, staticScreen, topFace, underRect, woodGrain,
   type DeskItemTone,
 } from './kit';
@@ -27,6 +27,9 @@ function deskMats(variant: string | undefined): DeskMats {
       return { top: M.white, edge: ramp('#d7d6d1', 0.05), legs: M.steel, ped: ramp('#dcdbd6', 0.05) };
     case 'dark':
       return { top: M.walnut, edge: ramp('#5f4535', 0.06), legs: M.graphite, ped: ramp('#5a4334', 0.06) };
+    // --- NOMADZZ AFTER DARK (aditivo): mesa executiva em mármore negro, pés em metal escuro.
+    case 'onyx':
+      return { top: M.onyx, edge: ramp('#101014', 0.06), legs: ramp('#2a2a30', 0.07), ped: ramp('#1c1c22', 0.06) };
     default:
       return { top: M.oak, edge: M.oakDark, legs: ramp('#e9e8e4', 0.05), ped: ramp('#e6e4de', 0.05) };
   }
@@ -40,8 +43,20 @@ function deskShadow(b: PixelBuf): void {
   contact(b, -1, 13, 34, 4, 0.2);
 }
 
+/** Veios de mármore negro no tampo (alternativa a woodGrain para a variante 'onyx'). */
+function marbleVeins(b: PixelBuf, x: number, y: number, w: number, h: number, seed: number): void {
+  const r = rngOf(seed, 71);
+  for (let v = 0; v < 2; v++) {
+    let vx = x + r() * w;
+    for (let yy = y; yy < y + h; yy++) {
+      b.set(Math.round(vx), yy, v ? 'rgba(201,169,106,0.3)' : 'rgba(210,210,220,0.22)');
+      vx += (r() - 0.4) * 1.1;
+    }
+  }
+}
+
 /** Tampo + bordas + pernas + gaveteiro (comum a desk e desk_back). */
-function deskBody(s: BufSprite, m: DeskMats, seed: number, back: boolean): void {
+function deskBody(s: BufSprite, m: DeskMats, seed: number, back: boolean, variant?: string): void {
   const b = s.buf;
   if (back) {
     // Painel frontal (lado de quem olha) cobrindo o vão.
@@ -66,14 +81,20 @@ function deskBody(s: BufSprite, m: DeskMats, seed: number, back: boolean): void 
   }
   // Tampo (12 linhas) + espessura da borda (2 linhas).
   topFace(b, 0, -6, 32, 12, m.top);
-  woodGrain(b, 1, -5, 30, 10, m.top, seed);
+  if (variant === 'onyx') marbleVeins(b, 1, -5, 30, 10, seed);
+  else woodGrain(b, 1, -5, 30, 10, m.top, seed);
   b.hline(0, 31, 6, m.edge.base);
   b.hline(0, 31, 7, m.edge.dk);
   b.set(0, 6, m.edge.lt);
+  // Fio dourado discreto na aresta frontal do tampo (acabamento premium).
+  if (variant === 'onyx') b.hline(0, 31, 6, GOLD_TRIM);
 }
 
-/** Objetos sobre a mesa (variações por semente). Retorna o retângulo da tela principal e o da secundária. */
-function deskTop(s: BufSprite, seed: number, tone: DeskItemTone): { screen: Box; screen2?: Box } {
+/**
+ * Objetos sobre a mesa (variações por semente). Retorna o retângulo da tela principal e o da
+ * secundária. `glow` (aditivo): tom do brilho da(s) tela(s) — ver `monitorFront`.
+ */
+function deskTop(s: BufSprite, seed: number, tone: DeskItemTone, glow: 'blue' | 'violet' = 'blue'): { screen: Box; screen2?: Box } {
   const b = s.buf;
   const r = rngOf(seed, 11);
   const v = seed % 6;
@@ -82,8 +103,8 @@ function deskTop(s: BufSprite, seed: number, tone: DeskItemTone): { screen: Box;
   let screen2: Box | undefined;
   switch (v) {
     case 1: {
-      screen = monitorFront(b, 2, -17, 16, 11);
-      screen2 = monitorFront(b, 18, -16, 13, 10);
+      screen = monitorFront(b, 2, -17, 16, 11, glow);
+      screen2 = monitorFront(b, 18, -16, 13, 10, glow);
       staticScreen(b, screen2, 'sheet', seed);
       keyboard(b, 6, -1, 11, tone);
       mouse(b, 20, 0, tone);
@@ -91,7 +112,7 @@ function deskTop(s: BufSprite, seed: number, tone: DeskItemTone): { screen: Box;
       break;
     }
     case 2: {
-      screen = monitorFront(b, 5, -17, 16, 11);
+      screen = monitorFront(b, 5, -17, 16, 11, glow);
       // Notebook aberto à direita (tela ligada com conteúdo fixo).
       b.rect(22, -9, 9, 6, '#3a404d');
       b.hline(22, 30, -9, '#4d5464');
@@ -105,7 +126,7 @@ function deskTop(s: BufSprite, seed: number, tone: DeskItemTone): { screen: Box;
       break;
     }
     case 3: {
-      screen = monitorFront(b, 8, -17, 16, 11);
+      screen = monitorFront(b, 8, -17, 16, 11, glow);
       b.rect(22, -15, 2, 2, '#f7d154');
       b.rect(9, -15, 2, 2, '#ff9fb2');
       keyboard(b, 11, -1, 10, tone);
@@ -116,8 +137,8 @@ function deskTop(s: BufSprite, seed: number, tone: DeskItemTone): { screen: Box;
       break;
     }
     case 4: {
-      screen = monitorFront(b, 4, -17, 15, 11);
-      screen2 = monitorFront(b, 19, -17, 12, 10);
+      screen = monitorFront(b, 4, -17, 15, 11, glow);
+      screen2 = monitorFront(b, 19, -17, 12, 10, glow);
       staticScreen(b, screen2, 'chart', seed);
       keyboard(b, 7, -1, 11, tone);
       mouse(b, 21, 0, tone);
@@ -125,7 +146,7 @@ function deskTop(s: BufSprite, seed: number, tone: DeskItemTone): { screen: Box;
       break;
     }
     case 5: {
-      screen = monitorFront(b, 8, -17, 16, 11);
+      screen = monitorFront(b, 8, -17, 16, 11, glow);
       keyboard(b, 11, -1, 10, tone);
       mouse(b, 23, 0, tone);
       // Fone de ouvido sobre a mesa.
@@ -139,7 +160,7 @@ function deskTop(s: BufSprite, seed: number, tone: DeskItemTone): { screen: Box;
       break;
     }
     default: {
-      screen = monitorFront(b, 8, -17, 16, 11);
+      screen = monitorFront(b, 8, -17, 16, 11, glow);
       keyboard(b, 11, -1, 10, tone);
       mouse(b, 23, 0, tone);
       mug(b, 3, -2, mugC);
@@ -156,11 +177,16 @@ function itemTone(variant: string | undefined): DeskItemTone {
   return variant === 'white' ? 'onLight' : 'light';
 }
 
+/** Brilho das telas conforme a mesa: violeta discreto nas mesas 'onyx' (acabamento premium). */
+function deskGlow(variant: string | undefined): 'blue' | 'violet' {
+  return variant === 'onyx' ? 'violet' : 'blue';
+}
+
 export function desk(variant: string | undefined, seed: number): BufFurniture {
   const s = floorSheet(2, 1, 20);
   const m = deskMats(variant);
-  deskBody(s, m, seed, false);
-  const scr = deskTop(s, seed, itemTone(variant));
+  deskBody(s, m, seed, false, variant);
+  const scr = deskTop(s, seed, itemTone(variant), deskGlow(variant));
   s.buf.outline();
   deskShadow(s.buf);
   s.rects = { screen: rectAt(s, scr.screen.x, scr.screen.y, scr.screen.w, scr.screen.h) };
@@ -172,13 +198,13 @@ export function deskBack(variant: string | undefined, seed: number): BufFurnitur
   const s = floorSheet(2, 1, 12);
   const m = deskMats(variant);
   const b = s.buf;
-  deskBody(s, m, seed, true);
+  deskBody(s, m, seed, true, variant);
   const r = rngOf(seed, 12);
   const v = seed % 4;
   const mugC = pick(r, MUG_COLORS);
   const tone = itemTone(variant);
-  // Verso em plástico claro; na mesa escura (nogueira), cinza médio para não brilhar demais.
-  const plastic = variant === 'dark' ? 'mid' : 'light';
+  // Verso em plástico claro; nas mesas escuras (nogueira, ônix), cinza médio para não brilhar demais.
+  const plastic = variant === 'dark' || variant === 'onyx' ? 'mid' : 'light';
   if (v === 1) {
     monitorBack(b, 2, -7, 15, 10, plastic);
     monitorBack(b, 17, -6, 13, 9, plastic);
@@ -202,6 +228,8 @@ const CHAIR_COLORS: Readonly<Record<string, string>> = {
   red: '#b44a4a',
   green: '#3f8a62',
   gray: '#8b929e',
+  // NOMADZZ AFTER DARK (aditivo): preto mais profundo, sem o matiz azulado de 'black'.
+  onyx: '#1f2128',
 };
 
 function chairRamp(variant: string | undefined): Ramp {

@@ -58,11 +58,12 @@ describe('preferências', () => {
     expect(worldOptionsFrom({ ...DEFAULT_PREFS, daylight: 'night' })).toMatchObject({ dayNight: true, daylight: 'night' });
   });
   it('ciclo dia/noite: valida o modo e migra o interruptor antigo', () => {
-    expect(DEFAULT_PREFS.daylight).toBe('auto');
+    // NOMADZZ AFTER DARK: o padrão é 'night' (só a camada visual; reversível no seletor da UI).
+    expect(DEFAULT_PREFS.daylight).toBe('night');
     expect(sanitizePrefs({ daylight: 'night' }).daylight).toBe('night');
-    expect(sanitizePrefs({ daylight: 'meio-dia' }).daylight).toBe('auto');
+    expect(sanitizePrefs({ daylight: 'meio-dia' }).daylight).toBe('night');
     expect(sanitizePrefs({ dayNight: false }).daylight).toBe('day');
-    expect(sanitizePrefs({ dayNight: true }).daylight).toBe('auto');
+    expect(sanitizePrefs({ dayNight: true }).daylight).toBe('night');
     expect(sanitizePrefs({ dayNight: false, daylight: 'night' }).daylight).toBe('night');
   });
   it('sons: desligados por padrão; volume e categorias validados', () => {

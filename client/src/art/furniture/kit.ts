@@ -22,7 +22,12 @@ export const M = {
   cardboard: ramp('#c99a5e', 0.06),
   blueFabric: ramp('#4f78b8', 0.07),
   orange: ramp('#ec8a3c', 0.07),
+  // --- NOMADZZ AFTER DARK (aditivo): mármore negro para tampos premium.
+  onyx: ramp('#1b1b20', 0.065),
 } as const;
+
+/** Fio dourado discreto (acabamento premium NOMADZZ AFTER DARK). */
+export const GOLD_TRIM = '#caa96b';
 
 /** Cores de acento saturadas (pastas, livros, objetos). */
 export const ACCENTS = ['#3f7fd8', '#ec8a3c', '#4cae6a', '#e05a5a', '#f2c14e', '#8d66cf', '#36b0b0', '#e47aa8'] as const;
@@ -185,9 +190,16 @@ export function mouse(b: PixelBuf, x: number, y: number, tone: DeskItemTone = 'l
   if (on) b.set(x, y, '#e4e8ee');
 }
 
-/** Monitor visto de frente: moldura, tela (retângulo retornado), pescoço e base. */
-export function monitorFront(b: PixelBuf, x: number, y: number, w = 16, h = 11): { x: number; y: number; w: number; h: number } {
+/**
+ * Monitor visto de frente: moldura, tela (retângulo retornado), pescoço e base.
+ * `glow` (aditivo): tom do brilho sutil da tela desligada e do LED — 'blue' (padrão, igual a sempre)
+ * ou 'violet' (acabamento premium NOMADZZ AFTER DARK, mesas 'onyx').
+ */
+export function monitorFront(b: PixelBuf, x: number, y: number, w = 16, h = 11, glow: 'blue' | 'violet' = 'blue'): { x: number; y: number; w: number; h: number } {
   const body = '#2c313d';
+  const edge = glow === 'violet' ? '#4a3d6e' : '#2a3d5f';
+  const streak = glow === 'violet' ? '#54447a' : '#2f4569';
+  const led = glow === 'violet' ? GOLD_TRIM : '#5fd07a';
   // Sombra do monitor no tampo (luz de cima/esquerda).
   b.hline(x + 3, x + w - 2, y + h + 3, SURFACE_SHADOW);
   b.rect(x, y, w, h, body);
@@ -200,9 +212,9 @@ export function monitorFront(b: PixelBuf, x: number, y: number, w = 16, h = 11):
   const sh = h - 2;
   // Fundo padrão = tela desligada (o mundo desenha o conteúdo animado por cima).
   b.rect(sx, sy, sw, sh, SCREEN_BG);
-  b.rect(sx, sy, sw, 1, '#2a3d5f');
-  for (let i = 0; i < sh; i++) b.set(sx + sw - 3 - i, sy + i, '#2f4569');
-  b.set(x + w - 2, y + h - 1, '#5fd07a');
+  b.rect(sx, sy, sw, 1, edge);
+  for (let i = 0; i < sh; i++) b.set(sx + sw - 3 - i, sy + i, streak);
+  b.set(x + w - 2, y + h - 1, led);
   // Pescoço e base.
   const cx = x + Math.floor(w / 2) - 1;
   b.rect(cx, y + h, 2, 2, '#4a5060');
