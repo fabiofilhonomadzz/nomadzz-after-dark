@@ -17,6 +17,11 @@ export interface WorldOptions {
   dayNight: boolean;
   /** (Opcional, aditivo) Ciclo dia/noite: automático, sempre dia ou sempre noite. Vale sobre `dayNight`. */
   daylight?: DaylightMode;
+  /**
+   * (Opcional, aditivo) NOMADZZ Social Life: conversas ambientais e fictícias das personas de
+   * projeto (Dante, Maya...) quando estão ociosas ou esperando um shell. `undefined` = ligado.
+   */
+  ambientSocial?: boolean;
 }
 
 /** Ciclo dia/noite: segue a hora local, ou fixa o dia ou a noite. */
@@ -131,4 +136,5 @@ export const DEFAULT_WORLD_OPTIONS: WorldOptions = {
   liveliness: 'normal',
   followSelected: false,
   dayNight: true,
+  ambientSocial: true,
 };

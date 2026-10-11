@@ -1,22 +1,13 @@
 // Identidade fixa dos agentes de projeto da NOMADZZ: quando uma subagente nasce com um dos
-// subagent_type abaixo (o "role" que o Claude Code grava no transcript), ela aparece no escritório
-// com o nome da persona em vez de um nome sorteado do pool comum (shared/names.ts). Só a aparência
-// muda (nome do personagem + gênero do sprite); o arquivo em ~/.claude/agents, o prompt e o id
-// técnico da subagente continuam intactos — o Habblaud nunca lê esses arquivos.
+// subagent_type mapeados em shared/nomadzz-personas.ts (o "role" que o Claude Code grava no
+// transcript), ela aparece no escritório com o nome da persona em vez de um nome sorteado do pool
+// comum (shared/names.ts). Só a aparência muda (nome do personagem + gênero do sprite); o arquivo
+// em ~/.claude/agents, o prompt e o id técnico da subagente continuam intactos — o Habblaud nunca
+// lê esses arquivos.
+import { NOMADZZ_PERSONAS } from '../../shared/nomadzz-personas';
 import type { PersonName } from '../../shared/names';
 
-export const NOMADZZ_PERSONAS: Readonly<Record<string, PersonName>> = {
-  'branding-director': { name: 'Dante', look: 'm' },
-  'creative-designer': { name: 'Maya', look: 'f' },
-  'lp-developer': { name: 'Noah', look: 'm' },
-  'saas-developer': { name: 'Elian', look: 'm' },
-  copywriter: { name: 'Lívia', look: 'f' },
-  'meta-ads-analyst': { name: 'Caio', look: 'm' },
-  'whatsapp-assistant': { name: 'Alma', look: 'f' },
-  'automation-engineer': { name: 'Ravi', look: 'm' },
-  'quality-reviewer': { name: 'Vera', look: 'f' },
-  'product-strategist': { name: 'Theo', look: 'm' },
-};
+export { NOMADZZ_PERSONAS };
 
 /**
  * Nome de persona NOMADZZ para `role`, sem colidir com `used` (mesmo sufixo numérico do sorteio

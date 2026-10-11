@@ -132,6 +132,11 @@ export class Sim {
     for (const s of this.spots.ofKind('elevator')) this.elevators.push(new Elevator(this.elevators.length, s.id));
   }
 
+  /** Opções do mundo atuais (exposto pro social: NOMADZZ Social Life, frequência de papo...). */
+  worldOptions(): WorldOptions {
+    return this.options();
+  }
+
   // =================================================================== snapshot
 
   applySnapshot(input: OfficeSnapshot, now: number): void {

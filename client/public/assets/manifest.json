@@ -13,13 +13,28 @@
     },
     "signage": {
       "file": "brand/signage.png",
-      "w": 64,
-      "h": 16
+      "w": 438,
+      "h": 48
     },
     "signageLarge": {
       "file": "brand/signage@4x.png",
-      "w": 256,
-      "h": 64
+      "w": 1752,
+      "h": 192
+    },
+    "wordmark": {
+      "file": "brand/wordmark.png",
+      "w": 219,
+      "h": 24
+    },
+    "wordmark2x": {
+      "file": "brand/wordmark@2x.png",
+      "w": 438,
+      "h": 48
+    },
+    "wordmark4x": {
+      "file": "brand/wordmark@4x.png",
+      "w": 876,
+      "h": 96
     },
     "favicon16": "brand/favicon-16.png",
     "favicon32": "brand/favicon-32.png",

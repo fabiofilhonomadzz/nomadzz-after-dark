@@ -2,6 +2,7 @@
 import type { UiComponent, UiContext } from './context';
 import { h, iconButton, setAttr, setHidden, setText } from './dom';
 import { ICONS } from './icons';
+import { buildNomadzzPreview } from './nomadzz-preview';
 import { notificationState, type Notifier } from './notify';
 import type { UiPrefs } from './prefs';
 import { SoundSettingsGroup } from './settings-sound';
@@ -118,6 +119,11 @@ export class SettingsPopover implements UiComponent {
 
     this.about = new AboutGroup(ctx);
 
+    // Prévia visual do NOMADZZ Social Life: só em desenvolvimento (import.meta.env.DEV é falso e o
+    // bloco inteiro sai do bundle de produção/Docker no build — não é só escondido por CSS). Não
+    // toca no Sim/Social/Office: só lê as falas já cadastradas e desenha uma amostra estática.
+    const nomadzzPreview = import.meta.env.DEV ? buildNomadzzPreview() : null;
+
     const close = iconButton(ICONS.close, 'Fechar configurações', () => this.hide(), 'ui-icon-btn--sm');
     this.el = h(
       'div',
@@ -128,6 +134,13 @@ export class SettingsPopover implements UiComponent {
         { class: 'ui-set-group' },
         h('h3', { text: 'Escritório' }),
         sw('showNames', 'Mostrar nomes', 'Etiqueta com o nome acima de cada personagem.', flip('showNames')),
+        sw(
+          'ambientSocial',
+          'NOMADZZ Social Life',
+          'Papo fictício e descontraído das personas de projeto quando estão ociosas ou esperando algo rodar — nunca durante o trabalho real.',
+          flip('ambientSocial'),
+        ),
+        ...(nomadzzPreview ? [nomadzzPreview] : []),
         this.bubbles.row,
         this.liveliness.row,
         this.daylight.row,
@@ -241,4 +254,5 @@ export class SettingsPopover implements UiComponent {
       this.ctx.invalidate();
     }
   }
+
 }

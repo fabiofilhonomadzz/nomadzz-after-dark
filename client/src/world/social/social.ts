@@ -36,6 +36,7 @@ import {
   type Role,
 } from './gathering';
 import * as L from './lines';
+import { NOMADZZ_CHAT, NOMADZZ_CHAT_CHANCE, NOMADZZ_GENERIC_CHANCE, NOMADZZ_GENERIC_CHAT } from './nomadzz-lines';
 import { bondBetween, hasTrait, personaFor, TRAITS, type Persona, type TraitId } from './persona';
 import { DELIVERY_REWARD, TURN_REWARD, Wallets, type StorageLike } from './wallet';
 
@@ -1017,6 +1018,15 @@ export class Social {
       if (t && t !== g.lastLine) return { line: t, topic: 'time' };
     }
     if (r < 0.2) return { line: p.catchphrase, topic: 'catch' };
+    // NOMADZZ Social Life: voz própria de quem é uma das personas de projeto (Dante, Maya...); quem
+    // não é nenhuma delas (sessões principais, outros subagentes) ainda pode puxar o papo genérico
+    // NOMADZZ (sem especialidade inventada), com chance menor. Um só interruptor desliga as duas
+    // camadas em Configurações.
+    if (this.sim.worldOptions().ambientSocial !== false) {
+      const persona = NOMADZZ_CHAT[c.info.role];
+      if (persona && rng() < NOMADZZ_CHAT_CHANCE) return { line: L.pick(persona, rng, vars, g.lastLine), topic: 'nomadzz' };
+      if (!persona && rng() < NOMADZZ_GENERIC_CHANCE) return { line: L.pick(NOMADZZ_GENERIC_CHAT, rng, vars, g.lastLine), topic: 'nomadzz' };
+    }
     const topics = p.traits.map((t: TraitId) => L.TRAIT_TOPICS[t]).filter((t): t is keyof typeof L.CHAT => !!t);
     let topic: keyof typeof L.CHAT = topics.length && rng() < 0.65 ? topics[Math.floor(rng() * topics.length)] : rng() < 0.6 ? 'work' : 'generic';
     if (topic === 'react' || topic === 'laugh') topic = 'generic';

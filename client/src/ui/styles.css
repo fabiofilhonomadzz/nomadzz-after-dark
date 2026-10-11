@@ -651,7 +651,8 @@
   gap: 4px;
 }
 
-/* Logotipo em pixels: 47×8 px da placa da marca, em escala inteira (3×) para ficar nítido. */
+/* Logotipo NOMADZZ HUB (imagem): altura fixa, largura automática pela proporção real do arquivo
+   (não force width aqui — a logo não é quadrada como a antiga "Habblaud" e esticaria). */
 .ui-brand__name {
   display: block;
   line-height: 0;
@@ -659,8 +660,8 @@
 
 .ui-wordmark {
   display: block;
-  width: 135px;
   height: 24px;
+  width: auto;
   image-rendering: pixelated;
 }
 
@@ -3314,8 +3315,8 @@
 }
 
 .ui-splash__name .ui-wordmark {
-  width: 225px;
   height: 40px;
+  width: auto;
 }
 
 .ui-splash__text {
